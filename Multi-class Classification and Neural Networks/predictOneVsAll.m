@@ -30,9 +30,14 @@ X = [ones(m, 1) X];
 %       for each row.
 %       
 
+M = zeros(m, 1); % store all the max possibilities among the 10
 
+all_possibility = sigmoid(X * all_theta.');  % its dimension = m * num_labels
+                                             % m is the number of samples,
+                                             % num_labels is the number of possibilities
+                                             
 
-
+[M ,p] = max(all_possibility, [], 2);
 
 
 
