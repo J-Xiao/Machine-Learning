@@ -21,16 +21,17 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
-for i = 1:size(X,1)
-    min = Inf;
+n = size(X,1);
+
+distance_vec = zeros(n, K);
+
+for i = 1:n
     for j = 1:K
-        d = norm(X(i, :) - centroids(j, :));
-        if(d < min)
-            min = d;
-            idx(i)= j;
-        end
+        min_arr(i, j) = norm(X(i, :) - centroids(j, :));
     end
 end
+
+[m, idx] = min(min_arr, [], 2);
 
 
 
