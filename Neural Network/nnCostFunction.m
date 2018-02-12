@@ -83,18 +83,21 @@ J = sum(sum((-ys .* log(a3) - (1 - ys) .* log(1 - a3)))) / m;
 % cost with regularization
 J = J + (sum(sum(Theta1(:, 2:end).^2)) + sum(sum(Theta2(:, 2:end).^2))) * lambda / (2 * m);
 
-
-
+% errors in layer 2 and 3
 error3 = a3 - ys;
 error2 = (error3 * Theta2(:, 2:end)) .* sigmoidGradient(z2);
 
+% accumulate gradient
 delta2 = error3' * a2;
 delta1 = error2' * a1;
 
-
+% gradient for cost function
 Theta1_grad = delta1 / m;
 Theta2_grad = delta2 / m;
 
+% regularize gradient
+Theta1_grad(:, 2:end) = Theta1_grad(:, 2:end) + Theta1(:, 2:end) * lambda / m;
+Theta2_grad(:, 2:end) = Theta2_grad(:, 2:end) + Theta2(:, 2:end) * lambda / m;
 
 
 
