@@ -62,7 +62,19 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+a1 = [ones(m, 1) X];
+a2 = sigmoid(a1 * Theta1');
+a2 = [ones(size(a2,1), 1) a2];
+a3 = sigmoid(a2 * Theta2');
 
+ys = zeros(m, num_labels);
+
+for i = 1 : m
+  ys(i, y(i)) = 1;
+end
+
+% cost without regularization
+J = sum(sum((-ys .* log(a3) - (1 - ys) .* log(1 - a3)))) / m;
 
 
 
