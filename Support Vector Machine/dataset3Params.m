@@ -23,10 +23,25 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
+try_vals = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
+min_error = realmax;
 
-
-
-
+for i = 1 : length(try_vals)
+  for j = 1 : length(try_vals)
+    temp_C = try_vals(i);
+    temp_sigma = try_vals(j);
+    
+    model = svmTrain(X, y, temp_C, @(x1, x2) gaussianKernel(x1, x2, temp_sigma));
+    pred = svmPredict(model, Xval);
+    
+    error = mean(double(pred ~= yval));
+    if error < min_error
+      min_error = error;
+      C = temp_C;
+      sigma = temp_sigma;
+    end
+  end
+end
 
 
 % =========================================================================
